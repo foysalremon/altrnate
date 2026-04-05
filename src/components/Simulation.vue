@@ -8,14 +8,19 @@
       ]"
       :style="{ gridTemplateRows: previewHeight === '100%' ? '100%' : previewHeight }"
     >
-      <div :style="{ height: previewHeight }" class="min-h-0">Device Frame for A</div>
-      <div :style="{ height: previewHeight }" class="min-h-0">Device Frame for B</div>
+      <div :style="{ height: previewHeight }" class="min-h-0">
+        <DeviceFrame :deviceMode="store.deviceMode"> LandingPreviewA </DeviceFrame>
+      </div>
+      <div :style="{ height: previewHeight }" class="min-h-0">
+        <DeviceFrame :deviceMode="store.deviceMode"> LandingPreviewB </DeviceFrame>
+      </div>
     </div>
     <div v-else>Overlay</div>
   </main>
 </template>
 <script setup lang="ts">
 import { useSimulatorStore } from '@/stores/simulator'
+import DeviceFrame from '@/components/DeviceFrame.vue'
 
 const store = useSimulatorStore()
 
