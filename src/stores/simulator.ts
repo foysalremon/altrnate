@@ -1,9 +1,19 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export type DeviceMode = 'desktop' | 'tablet' | 'mobile'
 export type CompareMode = 'side-by-side' | 'overlay'
 export type Tab = 'json' | 'vue' | 'react'
+export type Variant = 'A' | 'B'
+export type VariantConfig = {
+  headline: string
+  subtext: string
+  ctaText: string
+  ctaColor: string
+  badgeText: string
+  bgColor: string
+  heroImageUrl: string
+}
 
 export const useSimulatorStore = defineStore('simulator', () => {
   const deviceMode = ref<DeviceMode>('desktop')
@@ -142,6 +152,51 @@ export const useSimulatorStore = defineStore('simulator', () => {
     react,
   })
 
+  const variantA = ref<VariantConfig>({
+    headline: 'Ship Faster, Break Less',
+    subtext: 'The all-in-one platform that helps engineering teams deploy with confidence.',
+    ctaText: 'Start Free Trial',
+    ctaColor: '#2563eb',
+    badgeText: 'Trusted by 10,000+ teams',
+    bgColor: '#f0f4ff',
+    heroImageUrl: '',
+  })
+
+  const variantB = ref<VariantConfig>({
+    headline: 'Deploy Without Fear',
+    subtext:
+      'Stop worrying about broken releases. Our platform catches issues before your users do.',
+    ctaText: 'Get Started Free',
+    ctaColor: '#7c3aed',
+    badgeText: '4.9★ rated by developers',
+    bgColor: '#f5f0ff',
+    heroImageUrl: '',
+  })
+
+  const variants = computed(() => ({ A: variantA.value, B: variantB.value }))
+
+  const jsonOutput = computed(() =>
+    JSON.stringify(
+      {
+        abTest: {
+          version: '1.0',
+          exportedAt: new Date().toISOString(),
+          variants: variants.value,
+        },
+      },
+      null,
+      2,
+    ),
+  )
+
+  function updateVariant(variant: Variant, config: Partial<VariantConfig>) {
+    if (variant === 'A') {
+      variantA.value = { ...variantA.value, ...config }
+    } else {
+      variantB.value = { ...variantB.value, ...config }
+    }
+  }
+
   return {
     deviceMode,
     setDeviceMode,
@@ -152,5 +207,10 @@ export const useSimulatorStore = defineStore('simulator', () => {
     tab,
     setTab,
     snippets,
+    variantA,
+    variantB,
+    variants,
+    jsonOutput,
+    updateVariant,
   }
 })

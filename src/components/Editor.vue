@@ -27,17 +27,21 @@
         </button>
       </div>
 
-      <div>Variant Editor A</div>
+      <VariantEditor variant="A" :config="store.variantA" />
 
       <div className="border-t border-border" />
 
-      <div>Variant Editor B</div>
+      <VariantEditor variant="B" :config="store.variantB" />
     </div>
   </aside>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ChevronRight, ChevronLeft } from '@lucide/vue'
+import { useSimulatorStore } from '@/stores/simulator'
+import VariantEditor from '@/components/VariantEditor.vue'
 
 const sidebarCollapsed = ref(false)
+
+const store = useSimulatorStore()
 </script>
