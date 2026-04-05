@@ -9,10 +9,14 @@
       :style="{ gridTemplateRows: previewHeight === '100%' ? '100%' : previewHeight }"
     >
       <div :style="{ height: previewHeight }" class="min-h-0">
-        <DeviceFrame :deviceMode="store.deviceMode"> LandingPreviewA </DeviceFrame>
+        <DeviceFrame :deviceMode="store.deviceMode">
+          <LandingPreview variant="A" :config="store.variantA" :deviceMode="store.deviceMode" />
+        </DeviceFrame>
       </div>
       <div :style="{ height: previewHeight }" class="min-h-0">
-        <DeviceFrame :deviceMode="store.deviceMode"> LandingPreviewB </DeviceFrame>
+        <DeviceFrame :deviceMode="store.deviceMode">
+          <LandingPreview variant="B" :config="store.variantB" :deviceMode="store.deviceMode" />
+        </DeviceFrame>
       </div>
     </div>
     <div v-else>Overlay</div>
@@ -21,6 +25,7 @@
 <script setup lang="ts">
 import { useSimulatorStore } from '@/stores/simulator'
 import DeviceFrame from '@/components/DeviceFrame.vue'
+import LandingPreview from '@/components/LandingPreview.vue'
 
 const store = useSimulatorStore()
 
