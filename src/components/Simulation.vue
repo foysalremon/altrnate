@@ -19,13 +19,22 @@
         </DeviceFrame>
       </div>
     </div>
-    <div v-else>Overlay</div>
+    <div v-else class="h-full" data-testid="preview-overlay">
+      <DeviceFrame :deviceMode="store.deviceMode">
+        <OverlayCompare
+          :variantA="store.variantA"
+          :variantB="store.variantB"
+          :deviceMode="store.deviceMode"
+        />
+      </DeviceFrame>
+    </div>
   </main>
 </template>
 <script setup lang="ts">
 import { useSimulatorStore } from '@/stores/simulator'
 import DeviceFrame from '@/components/DeviceFrame.vue'
 import LandingPreview from '@/components/LandingPreview.vue'
+import OverlayCompare from '@/components/OverlayCompare.vue'
 
 const store = useSimulatorStore()
 
