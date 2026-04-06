@@ -13,7 +13,11 @@
     <div
       :class="[
         'h-full flex flex-col items-center justify-center text-center overflow-y-auto',
-        isMobile ? 'px-6 py-10' : isTablet ? 'px-8 py-10' : 'px-10 py-12',
+        props.deviceMode == 'mobile'
+          ? 'px-6 py-10'
+          : props.deviceMode === 'tablet'
+            ? 'px-8 py-10'
+            : 'px-10 py-12',
       ]"
     >
       <div
@@ -27,7 +31,11 @@
       <h1
         :class="[
           'font-bold leading-tight tracking-tight text-gray-900 mb-4',
-          isMobile ? 'text-2xl' : isTablet ? 'text-3xl' : 'text-4xl',
+          props.deviceMode === 'mobile'
+            ? 'text-2xl'
+            : props.deviceMode === 'tablet'
+              ? 'text-3xl'
+              : 'text-4xl',
         ]"
         :data-testid="`headline-variant-${props.variant}`"
       >
@@ -36,7 +44,10 @@
       </h1>
 
       <p
-        :class="['text-gray-600 mb-8 max-w-sm leading-relaxed', isMobile ? 'text-sm' : 'text-base']"
+        :class="[
+          'text-gray-600 mb-8 max-w-sm leading-relaxed',
+          props.deviceMode === 'mobile' ? 'text-sm' : 'text-base',
+        ]"
         :data-testid="`subtext-variant-${props.variant}`"
       >
         <template v-if="props.config.subtext">{{ props.config.subtext }}</template>
@@ -46,7 +57,7 @@
       <button
         :class="[
           'font-semibold rounded-lg text-white shadow-md transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95',
-          isMobile ? 'px-6 py-2.5 text-sm' : 'px-8 py-3 text-base',
+          props.deviceMode === 'mobile' ? 'px-6 py-2.5 text-sm' : 'px-8 py-3 text-base',
         ]"
         :style="{ backgroundColor: props.config.ctaColor }"
         :data-testid="`cta-variant-${props.variant}`"
@@ -55,7 +66,12 @@
         <template v-else class="text-gray-400 italic">Click Here</template>
       </button>
 
-      <div :class="['flex items-center gap-5 mt-8', isMobile ? 'flex-col gap-3' : '']">
+      <div
+        :class="[
+          'flex items-center gap-5 mt-8',
+          props.deviceMode === 'mobile' ? 'flex-col gap-3' : '',
+        ]"
+      >
         <span
           v-for="feature in ['No credit card required', 'Cancel anytime', 'Free onboarding']"
           :key="feature"

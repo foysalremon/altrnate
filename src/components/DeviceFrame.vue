@@ -20,13 +20,35 @@
       <slot />
     </div>
   </div>
+  <div
+    v-if="props.deviceMode === 'mobile'"
+    class="flex items-center justify-center h-full"
+    data-testid="device-frame-mobile"
+  >
+    <div class="relative" :style="{ width: '320px', height: '580px' }">
+      <div
+        class="absolute inset-0 rounded-[2.5rem] border-4 border-gray-800 dark:border-gray-600 bg-gray-800 shadow-2xl overflow-hidden"
+      >
+        <div
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-gray-800 rounded-b-2xl z-10 flex items-center justify-center gap-2"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-gray-600" />
+          <span class="w-8 h-1.5 rounded-full bg-gray-600" />
+        </div>
+        <div class="absolute inset-1 rounded-[2rem] overflow-hidden mt-4">
+          <slot />
+        </div>
+      </div>
+      <div class="absolute -right-1.5 top-20 w-1.5 h-10 bg-gray-700 rounded-r" />
+      <div class="absolute -left-1.5 top-16 w-1.5 h-6 bg-gray-700 rounded-l" />
+      <div class="absolute -left-1.5 top-28 w-1.5 h-8 bg-gray-700 rounded-l" />
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import type { Variant, VariantConfig, DeviceMode } from '@/stores/simulator'
 
 interface Props {
-  variant: Variant
-  config: VariantConfig
   deviceMode: DeviceMode
 }
 
