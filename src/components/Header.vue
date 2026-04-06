@@ -52,34 +52,21 @@
           <span class="hidden md:inline">{{ label }}</span>
         </button>
       </div>
-
       <button
-        @click="store.showExportFn(!store.showExport)"
-        :data-testid="`btn-export`"
-        class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-all cursor-pointer"
         :class="[
-          store.showExport
-            ? 'bg-primary text-primary-foreground border-primary'
-            : 'bg-background border-border hover:bg-muted',
+          'flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-all cursor-pointer bg-background border-border hover:bg-primary hover:text-primary-foreground hover:border-primary',
         ]"
+        data-testid="button-download"
+        @click="download"
       >
-        Export JSON
-        <component :is="store.showExport ? ChevronUp : ChevronDown" class="w-3.5 h-3.5" />
+        <Download class="w-3 h-3" />
+        Download
       </button>
     </div>
   </header>
 </template>
 <script setup lang="ts">
-import {
-  FlaskConical,
-  Monitor,
-  Tablet,
-  Smartphone,
-  Columns2,
-  Layers,
-  ChevronUp,
-  ChevronDown,
-} from '@lucide/vue'
+import { FlaskConical, Monitor, Tablet, Smartphone, Columns2, Layers, Download } from '@lucide/vue'
 import { useSimulatorStore } from '@/stores/simulator'
 import type { DeviceMode, CompareMode } from '@/stores/simulator'
 
@@ -107,4 +94,16 @@ const compareButtons: CompareButton[] = [
   { mode: 'side-by-side', icon: Columns2, label: 'Side by Side' },
   { mode: 'overlay', icon: Layers, label: 'Slide Overlay' },
 ]
+
+function download() {
+  const blob = new Blob([store.jsonOutput], {
+    type: 'application/json',
+  })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'ab-test-config.json'
+  a.click()
+  URL.revokeObjectURL(url)
+}
 </script>
