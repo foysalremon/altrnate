@@ -66,6 +66,7 @@
   </header>
 </template>
 <script setup lang="ts">
+import type { Component } from 'vue'
 import { FlaskConical, Monitor, Tablet, Smartphone, Columns2, Layers, Download } from '@lucide/vue'
 import { useSimulatorStore } from '@/stores/simulator'
 import type { DeviceMode, CompareMode } from '@/stores/simulator'

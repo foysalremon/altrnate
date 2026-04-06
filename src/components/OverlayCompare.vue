@@ -66,7 +66,8 @@ const position = ref(50)
 const dragging = ref(false)
 const containerRef = ref<HTMLDivElement | null>(null)
 
-function updatePosition(clientX: number) {
+function updatePosition(clientX: number | null | undefined) {
+  if (!clientX) return
   const container = containerRef.value
   if (!container) return
   const rect = container.getBoundingClientRect()
@@ -90,6 +91,6 @@ function onMouseDown(e: MouseEvent) {
 }
 
 function onTouchMove(e: TouchEvent) {
-  updatePosition(e.touches[0].clientX)
+  updatePosition(e.touches[0]?.clientX)
 }
 </script>
