@@ -44,6 +44,26 @@
       <div class="absolute -left-1.5 top-28 w-1.5 h-8 bg-gray-700 rounded-l" />
     </div>
   </div>
+  <div
+    v-if="props.deviceMode === 'tablet'"
+    class="flex items-center justify-center h-full"
+    data-testid="device-frame-tablet"
+  >
+    <div class="relative" :style="{ width: '480px', height: '620px' }">
+      <div
+        class="absolute inset-0 rounded-[1.5rem] border-4 border-gray-700 dark:border-gray-500 bg-gray-700 shadow-2xl overflow-hidden"
+      >
+        <div
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-gray-700 rounded-b-xl z-10 flex items-center justify-center"
+        >
+          <span class="w-2 h-2 rounded-full bg-gray-500" />
+        </div>
+        <div className="absolute inset-1 rounded-[1.2rem] overflow-hidden mt-4">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import type { Variant, VariantConfig, DeviceMode } from '@/stores/simulator'
